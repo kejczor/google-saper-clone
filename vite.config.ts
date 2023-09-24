@@ -9,11 +9,11 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: [{ find: "@", replacement: fileURLToPath(new URL("./", import.meta.url)) }],
     },
-    base: "/",
+    base: "/google-saper-clone/",
   };
 
-  if (command !== "serve") {
-    config.base = "/google-saper-clone/";
+  if (command === "serve") {
+    config.base = "/";
   }
 
   return config;
