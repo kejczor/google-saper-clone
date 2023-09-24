@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-import type { difficulty } from "@/App";
-import useApp from "@/context/use";
-import { BOARD_SIZES } from "@/util/consts";
-import { selectedDifficultyStorage } from "@/util/storage";
+import type { difficulty } from "@/src/App";
+import useApp from "@/src/context/use";
+import { BOARD_SIZES } from "@/src/util/consts";
+import { selectedDifficultyStorage } from "@/src/util/storage";
 
 export default function Dropdown() {
   const { difficulty, setDifficulty } = useApp();
@@ -42,13 +42,7 @@ export default function Dropdown() {
         }`}
       >
         {difficulty}
-        <span
-          className={`flex items-center ml-1 duration-500 ${
-            isDropdownOpen && "rotate-180"
-          }`}
-        >
-          &#x25BE;
-        </span>
+        <span className={`flex items-center ml-1 duration-500 ${isDropdownOpen && "rotate-180"}`}>&#x25BE;</span>
       </button>
       <div
         className={`absolute w-24 h-40 overflow-hidden transition-transform duration-500 origin-top ${

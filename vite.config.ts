@@ -6,6 +6,6 @@ import { fileURLToPath } from "url";
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [{ find: "@", replacement: fileURLToPath(new URL("./src", import.meta.url)) }],
+    alias: [{ find: "@", replacement: fileURLToPath(new URL("./", import.meta.url)) }],
   },
 });

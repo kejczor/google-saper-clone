@@ -1,10 +1,8 @@
 import { useCallback } from "react";
 
-import type { boardTile } from "@/App";
-import { COLORS } from "@/util/consts";
-import useApp from "@/context/use";
-
-import flagIcon from "@/assets/flag_icon.png";
+import type { boardTile } from "@/src/App";
+import { COLORS } from "@/src/util/consts";
+import useApp from "@/src/context/use";
 
 interface tileProps {
   tile: boardTile;
@@ -47,7 +45,7 @@ export default function Tile({ tile, x, y }: tileProps) {
   if (hasBomb && !isBuried) {
     NodeContent = <div className="w-1/2 h-1/2 rounded-full bg-neutral-700"></div>;
   } else if (hasFlag) {
-    NodeContent = <img src={flagIcon} className="h-5/6" />;
+    NodeContent = <img src="/flag_icon.png" className="h-5/6" />;
   } else if (!isBuried && bombsAround) {
     NodeContent = bombsAround;
     className = COLORS[bombsAround - 1] + " " + className;

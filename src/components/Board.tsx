@@ -1,4 +1,4 @@
-import useApp from "@/context/use";
+import useApp from "@/src/context/use";
 import Tile from "./Tile";
 
 export default function Board() {

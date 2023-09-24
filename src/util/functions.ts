@@ -1,5 +1,5 @@
-import { boardTile, difficulty } from "@/App";
 import { BOARD_SIZES, BOMBS } from "./consts";
+import type { boardTile, difficulty } from "@/src/App";
 
 export function generateBuriedBoard(difficulty: difficulty): boardTile[][] {
   const boardSize = BOARD_SIZES[difficulty];
@@ -20,22 +20,14 @@ export function generateBuriedBoard(difficulty: difficulty): boardTile[][] {
  *
  * Instead use `optimized_generateGameBoard`
  */
-export function generateGameBoard(
-  userClickX: number,
-  userClickY: number,
-  difficulty: difficulty
-) {
+export function generateGameBoard(userClickX: number, userClickY: number, difficulty: difficulty) {
   const boardSize = BOARD_SIZES[difficulty];
   const board: boardTile[][] = generateBuriedBoard(difficulty);
 
   for (let i = 0; i < BOMBS[difficulty]; i++) {
     let x = Math.floor(Math.random() * boardSize);
     let y = Math.floor(Math.random() * boardSize);
-    while (
-      board[x][y].hasBomb ||
-      Math.abs(x - userClickX) < 2 ||
-      Math.abs(y - userClickY) < 2
-    ) {
+    while (board[x][y].hasBomb || Math.abs(x - userClickX) < 2 || Math.abs(y - userClickY) < 2) {
       x = Math.floor(Math.random() * boardSize);
       y = Math.floor(Math.random() * boardSize);
     }
@@ -61,10 +53,7 @@ export function generateGameBoard(
       for (let j = -1; j <= 1; j++) {
         if (board[coords[0] + i]?.[coords[1] + j]?.bombsAround) {
           board[coords[0] + i][coords[1] + j].isBuried = false;
-        } else if (
-          board[coords[0] + i]?.[coords[1] + j]?.isBuried &&
-          !board[coords[0] + i]?.[coords[1] + j]?.hasBomb
-        ) {
+        } else if (board[coords[0] + i]?.[coords[1] + j]?.isBuried && !board[coords[0] + i]?.[coords[1] + j]?.hasBomb) {
           toCheck.push([coords[0] + i, coords[1] + j]);
         }
       }
@@ -74,22 +63,14 @@ export function generateGameBoard(
   return board;
 }
 
-export function optimized_generateGameBoard(
-  userClickX: number,
-  userClickY: number,
-  difficulty: difficulty
-) {
+export function optimized_generateGameBoard(userClickX: number, userClickY: number, difficulty: difficulty) {
   const boardSize = BOARD_SIZES[difficulty];
   const board: boardTile[][] = generateBuriedBoard(difficulty);
 
   for (let i = 0; i < BOMBS[difficulty]; i++) {
     let x = Math.floor(Math.random() * boardSize);
     let y = Math.floor(Math.random() * boardSize);
-    while (
-      board[x][y].hasBomb ||
-      Math.abs(x - userClickX) < 2 ||
-      Math.abs(y - userClickY) < 2
-    ) {
+    while (board[x][y].hasBomb || Math.abs(x - userClickX) < 2 || Math.abs(y - userClickY) < 2) {
       x = Math.floor(Math.random() * boardSize);
       y = Math.floor(Math.random() * boardSize);
     }
@@ -97,8 +78,7 @@ export function optimized_generateGameBoard(
 
     // counts bombs around
     for (let j = -1; j <= 1; j++)
-      for (let k = -1; k <= 1; k++)
-        if (board[x + j]?.[y + k]) board[x + j][y + k].bombsAround++;
+      for (let k = -1; k <= 1; k++) if (board[x + j]?.[y + k]) board[x + j][y + k].bombsAround++;
   }
 
   // holes are the empty tiles, when some empty tile is being clicked by the user
@@ -122,10 +102,7 @@ export function optimized_generateGameBoard(
         continue;
       }
 
-      if (
-        (topTile?.bombsAround && leftTileHoleId !== -1) ||
-        (leftTile?.bombsAround && topTileHoleId !== -1)
-      ) {
+      if ((topTile?.bombsAround && leftTileHoleId !== -1) || (leftTile?.bombsAround && topTileHoleId !== -1)) {
         board[y][x].holeId = greaterId;
         holesAndBorders[greaterId].push([y, x]);
       }
@@ -135,11 +112,7 @@ export function optimized_generateGameBoard(
         const newHoleId = holesAndBorders.length;
         board[y][x].holeId = newHoleId;
         holesAndBorders[newHoleId] = [[y, x]];
-      } else if (
-        leftTileHoleId === -1 ||
-        topTileHoleId === -1 ||
-        leftTileHoleId === topTileHoleId
-      ) {
+      } else if (leftTileHoleId === -1 || topTileHoleId === -1 || leftTileHoleId === topTileHoleId) {
         // pick the one which has hole id
         board[y][x].holeId = greaterId;
         holesAndBorders[greaterId].push([y, x]);
@@ -161,8 +134,7 @@ export function optimized_generateGameBoard(
       if (board[y][x].holeId !== -1) {
         // found some connection
         if (board[y - 1]) holesAndBorders[board[y][x].holeId].push([y - 1, x]);
-        if (board[y][x - 1])
-          holesAndBorders[board[y][x].holeId].push([y, x - 1]);
+        if (board[y][x - 1]) holesAndBorders[board[y][x].holeId].push([y, x - 1]);
       }
     }
   }

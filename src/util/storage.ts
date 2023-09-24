@@ -1,8 +1,5 @@
-import { difficulty } from "@/App";
-import {
-  RECORD_TIME_LOCALSTORAGE,
-  SELECTED_DIFFICULTY_LOCALSTORAGE,
-} from "./consts";
+import { RECORD_TIME_LOCALSTORAGE, SELECTED_DIFFICULTY_LOCALSTORAGE } from "./consts";
+import type { difficulty } from "@/src/App";
 
 export const recordTimeStorage = {
   set: (recordTime: number) => {

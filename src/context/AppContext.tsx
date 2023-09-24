@@ -1,12 +1,9 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 
-import type { difficulty, boardTile } from "@/App";
-import {
-  generateBuriedBoard,
-  optimized_generateGameBoard,
-} from "@/util/functions";
-import { BOMBS } from "@/util/consts";
-import { selectedDifficultyStorage } from "@/util/storage";
+import type { difficulty, boardTile } from "@/src/App";
+import { generateBuriedBoard, optimized_generateGameBoard } from "@/src/util/functions";
+import { BOMBS } from "@/src/util/consts";
+import { selectedDifficultyStorage } from "@/src/util/storage";
 
 type gameStates = "PLAY" | "NOT_STARTED" | "FREEZE" | "LOSE" | "WIN";
 
@@ -28,30 +25,17 @@ export const AppContext = createContext<AppContext>({} as AppContext);
 
 let gameTimeIntervalId: NodeJS.Timeout;
 
-export default function AppContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const [difficulty, setDifficulty] = useState<difficulty>(
-    selectedDifficultyStorage.get() ?? "ŁATWY"
-  );
+export default function AppContextProvider({ children }: { children: ReactNode }) {
+  const [difficulty, setDifficulty] = useState<difficulty>(selectedDifficultyStorage.get() ?? "ŁATWY");
   const [board, setBoard] = useState<boardTile[][]>([]);
-  const [holesAndBorders, setHolesAndBorders] = useState<[number, number][][]>(
-    []
-  );
-  const [remainingFlags, setRemainingFlags] = useState<number>(
-    BOMBS[difficulty]
-  );
+  const [holesAndBorders, setHolesAndBorders] = useState<[number, number][][]>([]);
+  const [remainingFlags, setRemainingFlags] = useState<number>(BOMBS[difficulty]);
   const [gameState, setGameState] = useState<gameStates>("NOT_STARTED");
   const [gameTime, setGameTime] = useState(0);
 
   useEffect(() => {
     if (gameState === "PLAY") {
-      gameTimeIntervalId = setInterval(
-        () => setGameTime((gameTime) => gameTime + 1),
-        1000
-      );
+      gameTimeIntervalId = setInterval(() => setGameTime((gameTime) => gameTime + 1), 1000);
       return () => clearInterval(gameTimeIntervalId);
     }
   }, [gameState]);
@@ -64,11 +48,7 @@ export default function AppContextProvider({
   }
 
   function startGame(x: number, y: number) {
-    const { board, holesAndBorders } = optimized_generateGameBoard(
-      x,
-      y,
-      difficulty
-    );
+    const { board, holesAndBorders } = optimized_generateGameBoard(x, y, difficulty);
     setBoard(board);
     setHolesAndBorders(holesAndBorders);
     setGameState("PLAY");
@@ -76,8 +56,7 @@ export default function AppContextProvider({
 
   function checkGameState(x: number, y: number, board: AppContext["board"]) {
     const buriedTiles = board.reduce(
-      (totalBuried, row) =>
-        totalBuried + row.filter(({ isBuried }) => isBuried).length,
+      (totalBuried, row) => totalBuried + row.filter(({ isBuried }) => isBuried).length,
       0
     );
 
