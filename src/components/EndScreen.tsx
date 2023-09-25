@@ -17,11 +17,11 @@ export default function EndScreen() {
         <div className="p-7 space-y-2 rounded-xl bg-sky-400">
           <h1 className="text-4xl font-bold text-center">You {gameState.toLowerCase()}</h1>
           <div className="flex justify-center items-center">
-            <img src="/clock_icon.png" alt="clock icon" className="h-10" />
+            <img src="./clock_icon.png" alt="clock icon" className="h-10" />
             <span className="w-12 text-center">{gameState === "WIN" ? gameTime : "_____"}</span>
           </div>
           <div className="flex justify-center items-center">
-            <img src="/trophy_icon.png" alt="" className="h-10" />
+            <img src="./trophy_icon.png" alt="" className="h-10" />
             <span className="w-12 text-center">{recordTime ?? "_____"}</span>
           </div>
         </div>
@@ -29,7 +29,7 @@ export default function EndScreen() {
           onClick={resetBoard}
           className="flex w-full justify-center mt-5 text-2xl items-center bg-lime-800 p-3 rounded-2xl"
         >
-          <img src="/refresh_icon.png" alt="refresh icon" className="h-9" />
+          <img src="./refresh_icon.png" alt="refresh icon" className="h-9" />
           Play again
         </button>
       </div>

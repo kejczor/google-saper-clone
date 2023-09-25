@@ -45,7 +45,7 @@ export default function Tile({ tile, x, y }: tileProps) {
   if (hasBomb && !isBuried) {
     NodeContent = <div className="w-1/2 h-1/2 rounded-full bg-neutral-700"></div>;
   } else if (hasFlag) {
-    NodeContent = <img src="/flag_icon.png" className="h-5/6" />;
+    NodeContent = <img src="./flag_icon.png" className="h-5/6" />;
   } else if (!isBuried && bombsAround) {
     NodeContent = bombsAround;
     className = COLORS[bombsAround - 1] + " " + className;
